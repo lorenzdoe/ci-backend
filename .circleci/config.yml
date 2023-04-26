@@ -28,21 +28,40 @@ jobs:
 
   build:
     docker:
+      - image: docker:stable
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: 
+          name: "Building"
+          command: echo "building stage ... "
+
+  deliver:
+    docker:
       - image: circleci/node:latest
     steps:
       - checkout
       - run: 
-          name: "Install dependencies"
-          command: npm install
       - run: 
-          name: "Building"
-          command: npm run build
+          name: "Deliver"
+          command: echo "deliver stage ..."
+
+  deploy:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run: 
+          name: "Deploy"
+          command: echo "deploy stage ... "
 
 # Orchestrate our job run sequence
 workflows:
   version: 2
-  lint-test-build:
+  lint-test-build-deliver-deploy:
     jobs:
       - lint
       - test
       - build
+      - deliver
+      - deploy
