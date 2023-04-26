@@ -41,7 +41,7 @@ app.use(session({
   }
 }));
 
-// defining routes
+// define authentication check
 const requireLogin = function(req, res, next) {
   if (req.session.user) {
     next();
