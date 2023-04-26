@@ -2,22 +2,47 @@ version: 2.1
 
 # Define the jobs we want to run for this project
 jobs:
-  build:
+  lint:
     docker:
-      - image: cimg/base:2023.03
+      - image: circleci/node:latest
     steps:
       - checkout
-      - run: echo "this is the build job"
+      - run: 
+          name: "Install dependencies"
+          command: npm install
+      - run:
+          name: "Linting"
+          command: npm run lint
+
   test:
     docker:
-      - image: cimg/base:2023.03
+      - image: circleci/node:latest
     steps:
       - checkout
-      - run: echo "this is the test job"
+      - run: 
+          name: "Install dependencies"
+          command: npm install
+      - run: 
+          name: "Testing"
+          command: npm run test
+
+  build:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run: 
+          name: "Install dependencies"
+          command: npm install
+      - run: 
+          name: "Building"
+          command: npm run build
 
 # Orchestrate our job run sequence
 workflows:
-  build_and_test:
+  version: 2
+  lint-test-build:
     jobs:
-      - build
+      - lint
       - test
+      - build
