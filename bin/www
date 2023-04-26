@@ -14,6 +14,7 @@ function start() {
   var db = require('../db/db');
 
   waitForConnection(db)
+  // for db persistance next line critical
       .then(() => db.sync( { force: true } ))
       .then(() => console.log("All models were synchronized successfully."))
       .then(() => startServer());
