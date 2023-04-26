@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "lint": "echo 'linting stage ... '",
-    "test": "echo 'testing stage ... '",
-    "build": "echo 'building stage ... '"
+    "lint": "eslint .",
+    "test": "echo 'testing stage ... '"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -20,5 +19,9 @@
     "mariadb": "^3.1.1",
     "morgan": "~1.9.1",
     "sequelize": "^6.26.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "eslint-plugin-vue": "^9.11.0"
   }
 }
