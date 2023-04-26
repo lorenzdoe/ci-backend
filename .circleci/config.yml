@@ -42,7 +42,6 @@ jobs:
     steps:
       - checkout
       - run: 
-      - run: 
           name: "Deliver"
           command: echo "deliver stage ..."
 
