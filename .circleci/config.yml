@@ -50,8 +50,7 @@ workflows:
   version: 2
   lint-test-build-deliver-deploy:
     jobs:
-      - lint
-      - test
+      - lint-test
       - build
       - deliver
       - deploy
