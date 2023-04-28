@@ -1,8 +1,6 @@
 /*
  * Importing necessary modules
 */
-var session = require('express-session');
-
 var createError = require('http-errors');
 var express = require('express');
 var cors = require('cors');
@@ -10,8 +8,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// router
 var todosRouter = require('./routes/todos');
-var loginRouter = require('./routes/login'); // added
+var loginRouter = require('./routes/sessions');
+var userRouter = require('./routes/users');
+
+// for protected routes
+const authenticate = require('./middlewares/auth');
 
 // create an instance of express
 var app = express();
@@ -28,31 +31,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// creating session with session ID cookie that expires after one hour
-
-const crypto = require('crypto');
-app.use(session({
-  secret: crypto.randomBytes(32).toString('hex'),
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    secure: false,
-    maxAge: 3600000
-  }
-}));
-
-// define authentication check
-const requireLogin = function(req, res, next) {
-  if (req.session.user) {
-    next();
-  } else {
-    res.redirect('/login');
-  }
-}
-
 // mount router to routes
-app.use('/todos', requireLogin, todosRouter);
-app.use('/login', loginRouter);
+app.use('/todos', authenticate, todosRouter);
+app.use('/sessions', loginRouter);     // handles login
+app.use('/users', userRouter);         // handles registration
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
