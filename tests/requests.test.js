@@ -13,7 +13,26 @@ describe('Test HTTP calls', () => {
     });
 
     describe('POST /users', () => {
-        test('create user - username does not exist', async () => {
+        test('create user - username does not exist (no mock)', async () => {
+
+            // Arrange
+            let testUser = {
+                username: 'Mockingbird',
+                password: 'Mockword'
+            };
+
+            // Act
+            let response = await request(app)
+                .post('/users')
+                .send(testUser);
+    
+            // Assert
+            expect(response.statusCode).toBe(201);
+            expect(response.body.username).toBe(testUser.username);
+            }
+        );
+
+        test('create user - username does not exist (mock)', async () => {
             // Mocks
             let findByPkSpy = jest.spyOn(db.models.user, 'findByPk').mockResolvedValue(null);
             let createSpy = jest.spyOn(db.models.user, 'create').mockResolvedValue(mockUser);
