@@ -6,8 +6,7 @@ jobs:
     # Primary container image where all commands run
     docker:
       - image: cimg/node:20.0.0
-        environment:
-          NODE_ENV: test
+
     # service container image
       - image: cimg/mariadb:10.10.3
         name: db
