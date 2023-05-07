@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
     "lint": "eslint .",
-    "test": "echo 'testing stage ... '"
+    "test": "jest --detectOpenHandles --forceExit"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -25,6 +25,8 @@
   },
   "devDependencies": {
     "eslint": "^8.39.0",
-    "eslint-plugin-vue": "^9.11.0"
+    "eslint-plugin-vue": "^9.11.0",
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3"
   }
 }
