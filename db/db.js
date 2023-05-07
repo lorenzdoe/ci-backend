@@ -1,7 +1,6 @@
 var env_path = process.env.CIRCLECI === 'true' ? '.env.circleci' : '.env.local';
 require('dotenv').config({ path: env_path }); //tells where env variables are
 
-
 // ORM (Object-Relational Mapping) tool
 const { Sequelize } = require('sequelize');
 
