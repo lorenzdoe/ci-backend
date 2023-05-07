@@ -1,4 +1,6 @@
 require('dotenv').config({ path: '.env.local' }); //tells where env variables are
+
+// ORM (Object-Relational Mapping) tool
 const { Sequelize } = require('sequelize');
 
 const connUrl =
@@ -12,6 +14,7 @@ const db = new Sequelize(connUrl);
 
 const models = [
     require('../models/todo'),
+    require('../models/user')
 ];
 
 for (const model of models) {
