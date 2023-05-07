@@ -1,14 +1,12 @@
 const { body, validationResult } = require('express-validator');
-
-const db = require('../db/db');
-
 var express = require('express');
 var router = express.Router();
+const db = require('../db/db');
+
 
 /* Read all todos */
 router.get('/', async (req, res, next) => {
     const todos = await db.models.todo.findAll();
-
     res.status(200).json(todos);
 });
 

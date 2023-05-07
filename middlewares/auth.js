@@ -1,3 +1,5 @@
+// include http-errors
+var createError = require('http-errors');
 var jwt = require('jsonwebtoken');
 
 // define authentication check
@@ -8,9 +10,20 @@ const authenticate = function(req, res, next) {
     else {
       const authHeader = req.headers['authorization'];
       const token = authHeader && authHeader.split(' ')[1];
-      // TODO check if token is authentic
-      next();
+      // check if token is authentic
+      const decode = jwt.verify(token, process.env.TOKEN_SECRET);
+      if(decode){
+        req.username = decode.username;
+        next();
+      }
+      else{
+        next(createError(401));
+      }
     }
-  }
+}
 
-module.exports = authenticate;
+function generateAccessToken(username) {
+  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
+}
+
+module.exports = { authenticate, generateAccessToken };

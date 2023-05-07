@@ -14,7 +14,7 @@ var loginRouter = require('./routes/sessions');
 var userRouter = require('./routes/users');
 
 // for protected routes
-const authenticate = require('./middlewares/auth');
+const { authenticate } = require('./middlewares/auth');
 
 // create an instance of express
 var app = express();
