@@ -1,8 +1,9 @@
-require('dotenv').config({ path: '.env.local' }); //tells where env variables are
+var env_path = process.env.CIRCLECI === 'true' ? '.env.circleci' : '.env.local';
+require('dotenv').config({ path: env_path }); //tells where env variables are
+
 
 // ORM (Object-Relational Mapping) tool
 const { Sequelize } = require('sequelize');
-
 
 const connUrl =
     process.env.DB_DIALECT + '://' +
@@ -11,11 +12,7 @@ const connUrl =
     process.env.DB_HOST + '/' +
     process.env.DB_NAME;
 
-var db = null;
-
-if(!process.env.NODE_ENV === 'test'){
-    db = new Sequelize(connUrl);
-}
+const db = new Sequelize(connUrl);
 
 const models = [
     require('../models/todo'),

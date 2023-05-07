@@ -3,8 +3,20 @@ version: 2.1
 # Define the jobs we want to run for this project
 jobs:
   lint-test:
+    # Primary container image where all commands run
     docker:
       - image: cimg/node:20.0.0
+        environment:
+          NODE_ENV: test
+    # service container image
+      - image: cimg/mariadb:10.10.3
+        name: db
+        restart: unless-stopped
+        environment:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: tododot
+          MARIADB_USER: todo-admin
+          MARIADB_PASSWORD: admin-pw
     steps:
       - checkout
       - run: 
