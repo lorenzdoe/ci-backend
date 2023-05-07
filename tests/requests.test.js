@@ -2,36 +2,36 @@ const request = require('supertest');
 const db = require('../db/db');
 const app = require('../app');
 
-jest.mock('../db/db');
 
 describe('Test HTTP calls', () => {
-
+    
     const mockUser = { username: 'Mockingbird', password: 'Mockword' };
-
+    
     beforeEach(() => {
         jest.clearAllMocks();
     });
-
+    
     describe('POST /users', () => {
         test('create user - username does not exist (no mock)', async () => {
-
+            
             // Arrange
             let testUser = {
                 username: 'Mockingbird',
                 password: 'Mockword'
             };
-
+            
             // Act
             let response = await request(app)
-                .post('/users')
-                .send(testUser);
-    
+            .post('/users')
+            .send(testUser);
+            
             // Assert
             expect(response.statusCode).toBe(201);
             expect(response.body.username).toBe(testUser.username);
-            }
+        }
         );
-
+        
+        jest.mock('../db/db');
         test('create user - username does not exist (mock)', async () => {
             // Mocks
             let findByPkSpy = jest.spyOn(db.models.user, 'findByPk').mockResolvedValue(null);
