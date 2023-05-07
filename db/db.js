@@ -11,7 +11,7 @@ const connUrl =
     process.env.DB_HOST + '/' +
     process.env.DB_NAME;
 
-const db = null;
+var db = null;
 
 if(!process.env.NODE_ENV === 'test'){
     db = new Sequelize(connUrl);
