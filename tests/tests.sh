@@ -71,15 +71,14 @@ echo "------------------------------"
 
 # right token
 echo "RIGHT TOKEN"
-echo "without authorization token - should fail"
-curl -i -X GET http://localhost:3000/todos -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhcGFzY2hsdW1wZiIsImlhdCI6MTY4MzQ2NTA2MCwiZXhwIjoxNjgzNDY4NjYwfQ.wjJQUigbzyeNWSGjZsvDm3vfDDgbe697AJNEhxwKKpE"
+curl -i -X GET http://localhost:3000/todos -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhcGFzY2hsdW1wZiIsImlhdCI6MTY4MzQ3MTQwMywiZXhwIjoxNjgzNDc1MDAzfQ.Hste1oX13bVVyaFdNBas_8sM7tUuzMipC21sjgccZZI"
 echo 
 read -p "Press any key to resume ..." null
 echo "------------------------------"
 
 # create new todo
 curl -i --location --request POST 'http://localhost:3000/todos' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhcGFzY2hsdW1wZiIsImlhdCI6MTY4MzQ2NTA2MCwiZXhwIjoxNjgzNDY4NjYwfQ.wjJQUigbzyeNWSGjZsvDm3vfDDgbe697AJNEhxwKKpE' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhcGFzY2hsdW1wZiIsImlhdCI6MTY4MzQ3MTQwMywiZXhwIjoxNjgzNDc1MDAzfQ.Hste1oX13bVVyaFdNBas_8sM7tUuzMipC21sjgccZZI' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "Buy milk"

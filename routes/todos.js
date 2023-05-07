@@ -5,7 +5,7 @@ const db = require('../db/db');
 
 
 /* Read all todos */
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
     const todos = await db.models.todo.findAll();
     res.status(200).json(todos);
 });
@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
 router.post('/',
     body('name').not().isEmpty(),
     body('name').isLength({ max: 255 }),
-    async (req, res, next) => {
+    async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -29,7 +29,7 @@ router.post('/',
 
 /* Update todos with done */
 router.put('/:id/done',
-    async (req, res, next) => {
+    async (req, res) => {
         const pk = req.params.id;
         var todo = await db.models.todo.findByPk(pk);
 
@@ -45,7 +45,7 @@ router.put('/:id/done',
 
 /* Update todos with undone */
 router.delete('/:id/done',
-    async (req, res, next) => {
+    async (req, res) => {
         const pk = req.params.id;
         var todo = await db.models.todo.findByPk(pk);
 

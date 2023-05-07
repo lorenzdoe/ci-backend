@@ -9,7 +9,7 @@ router.post('/',
     body('username').isLength({ max: 255 }),
     body('password').not().isEmpty(),
     body('password').isLength({ min: 5 }),    
-    async (req, res, next) => {
+    async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -17,7 +17,7 @@ router.post('/',
         try {
             const userExists = await db.models.user.findByPk(req.body.username);
             if(userExists){
-                return res.status(400).json({ errors: "Username already exists" });
+                return res.status(400).json({ errors: 'Username already exists' });
             }
             const user = await db.models.user.create({
                 username: req.body.username,
