@@ -6,7 +6,7 @@ jest.mock('../db/db');
 
 describe('Test HTTP calls', () => {
 
-    const mockUser = { username: "Mockingbird", password: "Mockword" };
+    const mockUser = { username: 'Mockingbird', password: 'Mockword' };
 
     beforeEach(() => {
         jest.clearAllMocks();
