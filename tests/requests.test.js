@@ -11,7 +11,7 @@ describe('Test HTTP calls', () => {
         jest.clearAllMocks();
     });
     
-    describe('POST /users', () => {
+    describe('POST /users (db)', () => {
         test('create user - username does not exist (no mock)', async () => {
             
             // Arrange
@@ -28,11 +28,18 @@ describe('Test HTTP calls', () => {
             // Assert
             expect(response.statusCode).toBe(201);
             expect(response.body.username).toBe(testUser.username);
+
+            // Clean up
+            await db.query('delete from tododot.users where username=\'' + testUser.username + '\'');
+            // await db.models.users.destroy({ where: {username: '\'' + testUser.username + '\'' } });
         }
         );
-        
+    });
+
+
+    describe('POST /users (db mocked)', () => {
         jest.mock('../db/db');
-        test('create user - username does not exist (mock)', async () => {
+        test('create user - username does not exist', async () => {
             // Mocks
             let findByPkSpy = jest.spyOn(db.models.user, 'findByPk').mockResolvedValue(null);
             let createSpy = jest.spyOn(db.models.user, 'create').mockResolvedValue(mockUser);
@@ -109,7 +116,7 @@ describe('Test HTTP calls', () => {
         );
     });
 
-    describe('POST /sessions', () => {
+    describe('POST /sessions (db mocked)', () => {
         test('login user - should work', async () => {
             // Mocks
             let findByPkSpy = jest.spyOn(db.models.user, 'findByPk').mockResolvedValue(mockUser);
