@@ -14,7 +14,7 @@ jobs:
           MARIADB_ROOT_PASSWORD: root
           MARIADB_DATABASE: tododot
           MARIADB_USER: todo-admin
-          MARIADB_PASSWORD: root
+          MARIADB_PASSWORD: admin-pw
     steps:
       - checkout
       - run: 
@@ -32,7 +32,9 @@ jobs:
           name: connect to db test
           command: |
             sudo apt-get update && sudo apt-get install -y mysql-client
-            mysql -h db -u todo-admin -p'root' -D tododot
+            echo "NOW CONNECT"
+            mysql -h db -u todo-admin -p'admin-pw' -D tododot
+            echo "successfully connected to the db"
       - run:
           name: "Linting"
           command: npm run lint
