@@ -28,6 +28,11 @@ jobs:
       - run:
           name: Wait for db
           command: dockerize -wait tcp://db:3306 -timeout 1m
+      - run: 
+          name: connect to db test
+          command: |
+            sudo apt-get update && sudo apt-get install -y mysql-client
+            mysql -h db -u todo-admin -p'root' -D tododot
       - run:
           name: "Linting"
           command: npm run lint
