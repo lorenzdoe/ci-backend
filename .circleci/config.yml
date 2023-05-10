@@ -47,7 +47,7 @@ jobs:
       - setup_remote_docker
       - run: 
           name: "Building"
-          command: echo "building docker image ... "
+          command: docker build -t cicltechnikum/conint-sem-backend:latest .
 
   deliver:
     docker:
@@ -56,7 +56,9 @@ jobs:
       - checkout
       - run: 
           name: "Deliver"
-          command: echo "deliver stage ..."
+          command: | 
+          echo $DOCKER_HUB_PW | docker login -u cicltechnikum --password-stdin
+          docker push cicltechnikum/conint-sem-backend:latest
 
   deploy:
     docker:
@@ -65,7 +67,7 @@ jobs:
       - checkout
       - run: 
           name: "Deploy"
-          command: echo "deploy stage ... "
+          command: echo "deploy to aws ... "
 
 # Orchestrate our job run sequence
 workflows:
