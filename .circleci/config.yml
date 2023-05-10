@@ -42,10 +42,10 @@ jobs:
           command: npm run test
 
   build:
-    requires:
-      - lint-test
     docker:
       - image: docker:stable
+    requires:
+      - lint-test
     steps:
       - checkout
       - setup_remote_docker
@@ -54,10 +54,10 @@ jobs:
           command: echo "building docker image ... "
 
   deliver:
-    requires:
-      - build
     docker:
       - image: cimg/base:2023.04
+    requires:
+      - build
     steps:
       - checkout
       - run: 
@@ -65,10 +65,10 @@ jobs:
           command: echo "deliver stage ..."
 
   deploy:
-    requires:
-      - deliver
     docker:
       - image: cimg/base:2023.04
+    requires:
+      - deliver
     steps:
       - checkout
       - run: 
