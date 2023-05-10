@@ -12,8 +12,12 @@ describe('Test HTTP calls', () => {
     });
     
     describe('POST /users (db)', () => {
+        
         test('create user - username does not exist (no mock)', async () => {
-            
+
+            // sync database models to makes sure they exist
+            await db.sync();
+
             // Arrange
             let testUser = {
                 username: 'Mockingbird',
@@ -23,7 +27,7 @@ describe('Test HTTP calls', () => {
             // Act
             let response = await request(app)
             .post('/users')
-            .send(testUser);
+            .send(testUser);  
             
             // Assert
             expect(response.statusCode).toBe(201);

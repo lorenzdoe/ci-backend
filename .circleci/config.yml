@@ -11,10 +11,10 @@ jobs:
       - image: cimg/mariadb:10.10.3
         name: db
         environment:
-          MARIADB_ROOT_PASSWORD: root
-          MARIADB_DATABASE: tododot
-          MARIADB_USER: todo-admin
-          MARIADB_PASSWORD: admin-pw
+          MARIADB_ROOT_PASSWORD: $DB_ROOT_PW
+          MARIADB_DATABASE: $DB_NAME
+          MARIADB_USER: $DB_USER
+          MARIADB_PASSWORD: $DB_PW
     steps:
       - checkout
       - run: 
@@ -49,7 +49,7 @@ jobs:
       - setup_remote_docker
       - run: 
           name: "Building"
-          command: echo "building stage ... "
+          command: echo "building docker image ... "
 
   deliver:
     docker:
