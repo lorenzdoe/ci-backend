@@ -6,7 +6,6 @@ jobs:
     # Primary container image where all commands run
     docker:
       - image: cimg/node:20.0.0
-
     # service container image
       - image: cimg/mariadb:10.10.3
         name: db
@@ -44,8 +43,6 @@ jobs:
   build:
     docker:
       - image: docker:stable
-    requires:
-      - lint-test
     steps:
       - checkout
       - setup_remote_docker
@@ -56,8 +53,6 @@ jobs:
   deliver:
     docker:
       - image: cimg/base:2023.04
-    requires:
-      - build
     steps:
       - checkout
       - run: 
@@ -67,8 +62,6 @@ jobs:
   deploy:
     docker:
       - image: cimg/base:2023.04
-    requires:
-      - deliver
     steps:
       - checkout
       - run: 
@@ -81,6 +74,12 @@ workflows:
   lint-test-build-deliver-deploy:
     jobs:
       - lint-test
-      - build
-      - deliver
-      - deploy
+      - build:
+          requires:
+            - lint-test
+      - deliver:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - deliver
