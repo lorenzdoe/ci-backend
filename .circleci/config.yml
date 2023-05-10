@@ -61,7 +61,7 @@ jobs:
       - run: 
           name: "Deliver - Publish to docker hub"
           command: | 
-          echo $DOCKER_HUB_PW | docker login -u cicltechnikum --password-stdin
+          echo "$DOCKER_HUB_PW" | docker login -u cicltechnikum --password-stdin
           docker push $IMAGE_NAME:latest
 
   deploy:
