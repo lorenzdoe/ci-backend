@@ -42,6 +42,8 @@ jobs:
           command: npm run test
 
   build:
+    requires:
+      - lint-test
     docker:
       - image: docker:stable
     steps:
@@ -52,6 +54,8 @@ jobs:
           command: echo "building docker image ... "
 
   deliver:
+    requires:
+      - build
     docker:
       - image: cimg/base:2023.04
     steps:
@@ -61,6 +65,8 @@ jobs:
           command: echo "deliver stage ..."
 
   deploy:
+    requires:
+      - deliver
     docker:
       - image: cimg/base:2023.04
     steps:
@@ -75,12 +81,6 @@ workflows:
   lint-test-build-deliver-deploy:
     jobs:
       - lint-test
-      - build:
-        requires:
-          - lint-test
-      - deliver:
-        requires:
-          - build
-      - deploy:
-        requires:
-          - deliver
+      - build
+      - deliver
+      - deploy
