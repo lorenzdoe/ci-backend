@@ -40,25 +40,29 @@ jobs:
           command: npm run test
 
   build:
+    environment: 
+      IMAGE_NAME: cicltechnikum/conint-sem-backend
     docker:
-      - image: docker:stable
+      - image: circleci/buildpack-deps:stretch
     steps:
       - checkout
       - setup_remote_docker
       - run: 
           name: "Building"
-          command: docker build -t cicltechnikum/conint-sem-backend:latest .
+          command: docker build -t $IMAGE_NAME:latest .
 
   deliver:
+    environment:
+      IMAGE_NAME: conint-sem-backend
     docker:
-      - image: cimg/base:2023.04
+      - image: circleci/buildpack-deps:stretch
     steps:
-      - checkout
+      - setup-remote-docker
       - run: 
-          name: "Deliver"
+          name: "Deliver - Publish to docker hub"
           command: | 
           echo $DOCKER_HUB_PW | docker login -u cicltechnikum --password-stdin
-          docker push cicltechnikum/conint-sem-backend:latest
+          docker push $IMAGE_NAME:latest
 
   deploy:
     docker:
