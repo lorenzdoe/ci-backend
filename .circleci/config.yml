@@ -3,6 +3,7 @@ executors:
   docker-publisher:
     environment:
       IMAGE_NAME: cicltechnikum/conint-sem-backend
+      TAG: latest
     docker:
       - image: circleci/buildpack-deps:stretch
 
@@ -52,7 +53,7 @@ jobs:
       - setup_remote_docker
       - run: 
           name: "Building"
-          command: docker build -t $IMAGE_NAME:latest .
+          command: docker build -t $IMAGE_NAME:$TAG .
       - run:
           name: Archive Docker image
           command: docker save -o image.tar $IMAGE_NAME
@@ -74,7 +75,7 @@ jobs:
           name: "Deliver - Publish to docker hub"
           command: | 
             echo "$DOCKER_HUB_PW" | docker login -u cicltechnikum --password-stdin
-            docker push $IMAGE_NAME:latest
+            docker push $IMAGE_NAME:$TAG
 
   deploy:
     docker:
@@ -97,12 +98,12 @@ workflows:
       - deliver:
           requires:
             - build
-          # filters:
-          #   branches:
-          #     only: deploy
+          filters:
+            branches:
+              only: production
       - deploy:
           requires:
             - deliver
-          # filters:
-          #   branches:
-          #     only: deploy
+          filters:
+            branches:
+              only: production
