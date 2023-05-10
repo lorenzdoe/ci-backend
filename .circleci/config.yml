@@ -31,7 +31,7 @@ jobs:
           name: connect to db test
           command: |
             sudo apt-get update && sudo apt-get install -y mysql-client
-            mysql -h db -u todo-admin -p'admin-pw' -D tododot -e "select 1;"
+            mysql -h $DB_HOST -u $DB_USER -p$DB_PW -D $DB_NAME -e "select 1;"
       - run:
           name: "Linting"
           command: npm run lint
