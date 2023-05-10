@@ -1,4 +1,10 @@
 version: 2.1
+executors:
+  docker-publisher:
+    environment:
+      IMAGE_NAME: cicltechnikum/conint-sem-backend
+    docker:
+      - image: circleci/buildpack-deps:stretch
 
 # Define the jobs we want to run for this project
 jobs:
@@ -40,10 +46,7 @@ jobs:
           command: npm run test
 
   build:
-    environment: 
-      IMAGE_NAME: cicltechnikum/conint-sem-backend
-    docker:
-      - image: circleci/buildpack-deps:stretch
+    executor: docker-publisher
     steps:
       - checkout
       - setup_remote_docker
@@ -59,12 +62,14 @@ jobs:
             - ./image.tar
 
   deliver:
-    environment:
-      IMAGE_NAME: conint-sem-backend
-    docker:
-      - image: circleci/buildpack-deps:stretch
+    executor: docker-publisher
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - setup_remote_docker
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
       - run: 
           name: "Deliver - Publish to docker hub"
           command: | 
@@ -92,6 +97,12 @@ workflows:
       - deliver:
           requires:
             - build
+          # filters:
+          #   branches:
+          #     only: deploy
       - deploy:
           requires:
             - deliver
+          # filters:
+          #   branches:
+          #     only: deploy
