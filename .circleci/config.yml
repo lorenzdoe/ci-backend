@@ -75,6 +75,12 @@ workflows:
   lint-test-build-deliver-deploy:
     jobs:
       - lint-test
-      - build
-      - deliver
-      - deploy
+      - build:
+        requires:
+          - lint-test
+      - deliver:
+        requires:
+          - build
+      - deploy:
+        requires:
+          - deliver
