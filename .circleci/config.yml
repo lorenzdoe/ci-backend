@@ -31,6 +31,7 @@ jobs:
           name: connect to db test
           command: |
             sudo apt-get update && sudo apt-get install -y mysql-client
+            echo ${DB_ROOT_PW}
             mysql -h db -u todo-admin -padmin-pw -D tododot -e "select 1;" -v
       - run:
           name: "Linting"
