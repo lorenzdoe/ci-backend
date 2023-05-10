@@ -27,6 +27,9 @@ jobs:
           name: "Install dependencies"
           command: npm install
       - run:
+          name: "Linting Stage"
+          command: npm run lint
+      - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           environment:
@@ -39,9 +42,6 @@ jobs:
           command: |
             sudo apt-get update && sudo apt-get install -y mysql-client
             mysql -h db -u todo-admin -padmin-pw -D tododot -e "select 1;" -v
-      - run:
-          name: "Linting"
-          command: npm run lint
       - run: 
           name: "Testing"
           command: npm run test
