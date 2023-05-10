@@ -10,10 +10,10 @@ jobs:
       - image: cimg/mariadb:10.10.3
         name: db
         environment:
-          MARIADB_ROOT_PASSWORD: $DB_ROOT_PW
-          MARIADB_DATABASE: $DB_NAME
-          MARIADB_USER: $DB_USER
-          MARIADB_PASSWORD: $DB_PW
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: tododot
+          MARIADB_USER: todo-admin
+          MARIADB_PASSWORD: todo-pw
     steps:
       - checkout
       - run: 
@@ -31,7 +31,7 @@ jobs:
           name: connect to db test
           command: |
             sudo apt-get update && sudo apt-get install -y mysql-client
-            mysql -h db -u $DB_USER -p$DB_ROOT_PW -D $DB_NAME -e "select 1;" -v
+            mysql -h db -u todo-admin -ptodo-pw -D tododot -e "select 1;" -v
       - run:
           name: "Linting"
           command: npm run lint
