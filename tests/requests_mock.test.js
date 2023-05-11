@@ -1,9 +1,9 @@
 const request = require('supertest');
 const db = require('../db/db');
 const app = require('../app');
+const jwt = require('jsonwebtoken');
 
-
-describe('Test HTTP calls', () => {
+describe('Test HTTP calls mocked db', () => {
     
     const mockUser = { username: 'Mockingbird', password: 'Mockword' };
     
@@ -11,37 +11,7 @@ describe('Test HTTP calls', () => {
         jest.clearAllMocks();
     });
     
-    describe('POST /users (db)', () => {
-        
-        test('create user - username does not exist (no mock)', async () => {
-
-            // sync database models to makes sure they exist
-            await db.sync();
-
-            // Arrange
-            let testUser = {
-                username: 'Mockingbird',
-                password: 'Mockword'
-            };
-            
-            // Act
-            let response = await request(app)
-            .post('/users')
-            .send(testUser);  
-            
-            // Assert
-            expect(response.statusCode).toBe(201);
-            expect(response.body.username).toBe(testUser.username);
-
-            // Clean up
-            await db.query('delete from tododot.users where username=\'' + testUser.username + '\'');
-            // await db.models.users.destroy({ where: {username: '\'' + testUser.username + '\'' } });
-        }
-        );
-    });
-
-
-    describe('POST /users (db mocked)', () => {
+    describe('POST /users', () => {
         jest.mock('../db/db');
         test('create user - username does not exist', async () => {
             // Mocks
@@ -120,24 +90,28 @@ describe('Test HTTP calls', () => {
         );
     });
 
-    describe('POST /sessions (db mocked)', () => {
+    describe('POST /sessions', () => {
         test('login user - should work', async () => {
-            // Mocks
-            let findByPkSpy = jest.spyOn(db.models.user, 'findByPk').mockResolvedValue(mockUser);
-
             // Arrange
             let testUser = {
                 username: 'Mockingbird',
                 password: 'Mockword'
             };
+            
+            // Mocks
+            let findByPkSpy = jest.spyOn(db.models.user, 'findByPk').mockResolvedValue(testUser);
     
             // Act
             let response = await request(app)
                 .post('/sessions')
                 .send(testUser);
+            // verify that token valid
+            const decode = jwt.verify(response.body.token, process.env.TOKEN_SECRET);
+            const gotUsername = decode.username;
     
             // Assert
             expect(response.statusCode).toBe(200);
+            expect(gotUsername).toBe(testUser.username);
             expect(findByPkSpy).toHaveBeenCalledTimes(1);
             expect(findByPkSpy).toHaveBeenCalledWith(testUser.username);
         }

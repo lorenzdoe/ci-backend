@@ -32,15 +32,15 @@ jobs:
           name: "Linting Stage"
           command: npm run lint
       - run:
-          name: install dockerize
+          name: "install dockerize"
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           environment:
             DOCKERIZE_VERSION: v0.6.1
       - run:
-          name: Wait for db
+          name: "Wait for db"
           command: dockerize -wait tcp://db:3306 -timeout 1m
       - run: 
-          name: connect to db test
+          name: "connect to db test"
           command: |
             sudo apt-get update && sudo apt-get install -y mysql-client
             mysql -h db -u todo-admin -padmin-pw -D tododot -e "select 1;" -v
@@ -57,7 +57,7 @@ jobs:
           name: "Building"
           command: docker build -t $IMAGE_NAME:$TAG .
       - run:
-          name: Archive Docker image
+          name: "Archive Docker image"
           command: docker save -o image.tar $IMAGE_NAME
       - persist_to_workspace:
           root: .
@@ -71,7 +71,7 @@ jobs:
           at: /tmp/workspace
       - setup_remote_docker
       - run:
-          name: Load archived Docker image
+          name: "Load archived Docker image"
           command: docker load -i /tmp/workspace/image.tar
       - run: 
           name: "Deliver - Publish to docker hub"
