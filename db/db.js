@@ -3,17 +3,15 @@ require('express');
 const { Sequelize } = require('sequelize');
 
 function getEnvPath() {
-    if (process.env.NODE_ENV === 'production') {
-      // Load environment variables set by Docker Compose in production
-      return '.env';
-    } else if (process.env.NODE_ENV === 'circleci') {
-      // Load environment variables for CircleCI
-      return '.env.circleci';
-    } else {
-      // Load local environment variables for development
-      return '.env.local';
+    switch(process.env.NODE_ENV) {
+        case 'production':
+            return '.env';
+        case 'circleci':
+            return '.env.circleci';
+        default:
+            return '.env.local';
     }
-  }
+}
 
 const connUrl =
     process.env.DB_DIALECT + '://' +
