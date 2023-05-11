@@ -10,6 +10,8 @@ executors:
 # Define the jobs we want to run for this project
 jobs:
   lint-test:
+    environment:
+      NODE_ENV: circleci
     # Primary container image where all commands run
     docker:
       - image: cimg/node:20.0.0

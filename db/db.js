@@ -1,8 +1,19 @@
-var env_path = process.env.CIRCLECI === 'true' ? '.env.circleci' : '.env.local';
-require('dotenv').config({ path: env_path }); //tells where env variables are
+require('dotenv').config({ path: getEnvPath() }); //tells where env variables are
 require('express');
-// ORM (Object-Relational Mapping) tool
 const { Sequelize } = require('sequelize');
+
+function getEnvPath() {
+    if (process.env.NODE_ENV === 'production') {
+      // Load environment variables set by Docker Compose in production
+      return '.env';
+    } else if (process.env.NODE_ENV === 'circleci') {
+      // Load environment variables for CircleCI
+      return '.env.circleci';
+    } else {
+      // Load local environment variables for development
+      return '.env.local';
+    }
+  }
 
 const connUrl =
     process.env.DB_DIALECT + '://' +
