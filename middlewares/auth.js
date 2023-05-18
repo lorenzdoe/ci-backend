@@ -14,7 +14,8 @@ const authenticate = function(req, res, next) {
       try {
         const decode = jwt.verify(token, process.env.TOKEN_SECRET);
         if (decode) {
-          req.username = decode.username;
+          // set decoded username in req body
+          req.body.username = decode.username;
           next();
         } else {
           next(createError(401));

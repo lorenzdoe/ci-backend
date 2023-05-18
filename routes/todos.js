@@ -6,7 +6,10 @@ const db = require('../db/db');
 
 /* Read all todos */
 router.get('/', async (req, res) => {
-    const todos = await db.models.todo.findAll();
+    const username = req.body.username;
+    const todos = await db.models.todo.findAll({
+        where: {username}
+    });
     res.status(200).json(todos);
 });
 
@@ -40,6 +43,13 @@ router.put('/:id/done',
             return;
         }
 
+        // forbidden
+        else if(todo.username != req.body.username) {
+            res.status(403);
+            return;
+        }
+        
+
         todo = await todo.update({ done: true });
 
         res.status(200).json(todo);
@@ -53,6 +63,12 @@ router.delete('/:id/done',
 
         if (null == todo) {
             res.status(404);
+            return;
+        }
+
+        // forbidden
+        else if(todo.username != req.body.username) {
+            res.status(403);
             return;
         }
 

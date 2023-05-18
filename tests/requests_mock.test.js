@@ -140,4 +140,35 @@ describe('Test HTTP calls mocked db', () => {
         );
     });
 
+    describe('CREATE TODO', () => {
+        test('login, create', async () => {
+            // Arrange
+            let testUser = {
+                username: 'Mockingbird',
+                password: 'Mockword'
+            };
+            let todo = {
+                name: 'buy milk'
+            };
+                // Mock
+            let findByPkSpy = jest.spyOn(db.models.user, 'findByPk').mockResolvedValue(testUser);
+            let createTodoSpy = jest.spyOn(db.models.todo, 'create').mockResolvedValue(todo);
+            let arrangeResponse = await request(app)
+                .post('/sessions')
+                .send(testUser);
+            let token = arrangeResponse.body.token;
+            
+            // Act
+            let response = await request(app)
+                .post('/todos')
+                .set('Authorization', `Baerer ${token}`)
+                .send(todo);
+
+            
+            // Assert
+            expect(response.statusCode).toBe(201);
+        }
+        );
+    });
+
 });

@@ -96,4 +96,47 @@ describe('Test HTTP calls db conn', () => {
         
     });
 
+    describe('CREATE TODO', () => {
+        test('login, create and find todo by username', async () => {
+            // Arrange
+            let testUser = {
+                username: 'Test',
+                password: 'TestPassword'
+            };
+            // create user
+            await request(app)
+                .post('/users')
+                .send(testUser);
+
+            // login user
+            let arrangeResponse = await request(app)
+                .post('/sessions')
+                .send(testUser);
+            let token = arrangeResponse.body.token;
+            
+            // Act
+            let todo = {
+                name: 'buy milk'
+            };
+            let createRes = await request(app)
+                .post('/todos')
+                .set('Authorization', `Baerer ${token}`)
+                .send(todo);
+            let todoId = createRes.body.id;
+            let findRes = await request(app)
+                .get('/todos')
+                .set('Authorization', `Baerer ${token}`)
+                .send();
+
+            
+            // Assert
+            expect(createRes.statusCode).toBe(201);
+            expect(findRes.statusCode).toBe(200);
+
+            // clean up
+            await db.models.todo.destroy({ where: {id: todoId } });
+        }
+        );
+    });
+
 });
