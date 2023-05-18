@@ -16,6 +16,10 @@ module.exports = (sequelize) => {
             allowNull: false,
             type: DataTypes.BOOLEAN,
             defaultValue: false
+        },
+        username: {
+            allowNull: false,
+            type: DataTypes.STRING
         }
     });
 };

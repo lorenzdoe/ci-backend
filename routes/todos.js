@@ -14,6 +14,7 @@ router.get('/', async (req, res) => {
 router.post('/',
     body('name').not().isEmpty(),
     body('name').isLength({ max: 255 }),
+    body('username').not().isEmpty(),
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -21,7 +22,8 @@ router.post('/',
         }
 
         const todo = await db.models.todo.create({
-            name: req.body.name
+            name: req.body.name,
+            username: req.body.username
         });
 
         res.status(201).json(todo);
