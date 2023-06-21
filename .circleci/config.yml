@@ -89,7 +89,7 @@ jobs:
           name: "Deploy to EC2 instance"
           command: |
             sudo apt-get update && sudo apt-get install -y openssh-client
-            sudo ssh -o StrictHostKeyChecking=no -i deploy_key.pem ubuntu@$AWS_EC2_INSTANCE_IP "sudo docker compose up --pull --detach"
+            sudo ssh ubuntu@$AWS_EC2_INSTANCE_IP "sudo docker compose up --pull --detach"
 
 
 # Orchestrate our job run sequence
