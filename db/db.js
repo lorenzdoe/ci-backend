@@ -5,7 +5,7 @@ const { Sequelize } = require('sequelize');
 function getEnvPath() {
     switch(process.env.NODE_ENV) {
         case 'production':
-            return '.env';
+            return '/app/.env';
         case 'circleci':
             return '.env.circleci';
         default:

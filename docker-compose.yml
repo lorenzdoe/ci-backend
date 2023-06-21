@@ -12,6 +12,7 @@ services:
       MARIADB_DATABASE: tododot
       MARIADB_USER: todo-admin
       MARIADB_PASSWORD: admin-pw
+      NODE_ENV: development
   
   backend:
     build: .
