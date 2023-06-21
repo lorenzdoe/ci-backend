@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@4.0.0
+
 executors:
   docker-publisher:
     environment:
@@ -80,17 +84,20 @@ jobs:
             docker push $IMAGE_NAME:$TAG
 
   deploy:
-    docker:
-      - image: cimg/base:2023.05
+    executor: aws-cli/default
     steps:
       - checkout
+      - aws-cli/setup:
+          aws_access_key_id: ASIAS3VO4TWGIVNRINV7
+          aws_secret_access_key: wn1CLJ9p35umyGHO4ekY5wCYAFMSindwsBehwh1z
+          region: us-east-1
       - run: 
           name: "Deploy to EC2 instance"
           command: |
             sudo apt-get update && sudo apt-get install -y openssh-client
-            echo "$SSH_KEY" > deploy_key.pem
+            echo "$AWS_SSH_KEY" > deploy_key.pem
             sudo chmod 400 deploy_key.pem
-            sudo ssh -o StrictHostKeyChecking=no -i deploy_key.pem ubuntu@52.90.231.142 "docker pull $IMAGE_NAME:$TAG && docker run -d -p 80:80 $IMAGE_NAME:$TAG"
+            sudo ssh -o StrictHostKeyChecking=no -i deploy_key.pem ubuntu@54.145.42.248 "sudo docker compose up --pull --force-recreate"
 
 
 # Orchestrate our job run sequence
