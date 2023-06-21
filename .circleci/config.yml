@@ -89,8 +89,8 @@ jobs:
           command: |
             sudo apt-get update && sudo apt-get install -y openssh-client
             echo "$SSH_KEY" > deploy_key.pem
-            chmod 400 deploy_key.pem
-            ssh -o StrictHostKeyChecking=no -i deploy_key.pem ubuntu@52.90.231.142 "docker pull $IMAGE_NAME:$TAG && docker run -d -p 80:80 $IMAGE_NAME:$TAG"
+            sudo chmod 400 deploy_key.pem
+            sudo ssh -o StrictHostKeyChecking=no -i deploy_key.pem ubuntu@52.90.231.142 "docker pull $IMAGE_NAME:$TAG && docker run -d -p 80:80 $IMAGE_NAME:$TAG"
 
 
 # Orchestrate our job run sequence
