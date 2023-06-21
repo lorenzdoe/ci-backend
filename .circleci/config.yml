@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  aws-cli: circleci/aws-cli@4.0.0
-
 executors:
   docker-publisher:
     environment:
@@ -84,7 +81,8 @@ jobs:
             docker push $IMAGE_NAME:$TAG
 
   deploy:
-    executor: aws-cli/default
+    docker:
+      - image: cimg/base:2023.05
     steps:
       - checkout
       - run: 
@@ -119,7 +117,7 @@ jobs:
             SloYyJNLr1sMr8XHgS1qxD1eb2zNdeZr5gMt+vLPsNKRHXEfJfrr6g==
             -----END RSA PRIVATE KEY-----" > deploy_key.pem
             sudo chmod 400 deploy_key.pem
-            sudo ssh -o StrictHostKeyChecking=no -i deploy_key.pem ubuntu@54.145.42.248 "sudo docker compose up --pull --force-recreate"
+            sudo ssh -o StrictHostKeyChecking=no -i deploy_key.pem ubuntu@54.145.42.248 "sudo docker compose up --pull --force-recreate --detach"
 
 
 # Orchestrate our job run sequence
