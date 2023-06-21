@@ -87,10 +87,6 @@ jobs:
     executor: aws-cli/default
     steps:
       - checkout
-      - aws-cli/setup:
-          aws_access_key_id: ASIAS3VO4TWGIVNRINV7
-          aws_secret_access_key: wn1CLJ9p35umyGHO4ekY5wCYAFMSindwsBehwh1z
-          region: us-east-1
       - run: 
           name: "Deploy to EC2 instance"
           command: |
