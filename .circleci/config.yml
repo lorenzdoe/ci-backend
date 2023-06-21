@@ -87,7 +87,7 @@ jobs:
       - run: 
           name: "Deploy to EC2 instance"
           command: |
-            ssh -o StrictHostKeyChecking=no ubuntu@$AWS_EC2_INSTANCE_IP "nohup ./deploy_script.sh &"
+            ssh -o StrictHostKeyChecking=no ubuntu@$AWS_EC2_INSTANCE_IP "nohup ./deploy_script.sh > /dev/null 2>&1 &"
             # nohup used to detach the script execution from the current session and prevent it from being terminated when the SSH session ends
 
 # Orchestrate our job run sequence
