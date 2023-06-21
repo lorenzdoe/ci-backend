@@ -87,41 +87,37 @@ jobs:
     executor: aws-cli/default
     steps:
       - checkout
-      - aws-cli/setup:
-          aws_access_key_id: ASIAS3VO4TWGIVNRINV7
-          aws_secret_access_key: wn1CLJ9p35umyGHO4ekY5wCYAFMSindwsBehwh1z
-          region: us-east-1
       - run: 
           name: "Deploy to EC2 instance"
           command: |
             sudo apt-get update && sudo apt-get install -y openssh-client
             echo "-----BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEApPP9HU5/9dYJ3/Qry+AeXQqF5T8RwicZm5exQLMxwlJ5WB+L
-OZT0UTEbSFaUAbAeXV0xzHE73cvVPOGuU07y0s2+y5srUSr6efiZ9FADAhNQs12s
-+JTSJt0tdjFnfuUJfJkQlFW0NnQI3zyJ75PHNeoLWz9Ujh2715XV2gcAGh+ii0oe
-CDhAGUWf9+EjJrHZHcZc20J2fxb0Lr3khURIekRiO9W0mD+99fgu3e/po/MdeMaz
-U0UZ1FujKw7mCqeeTFwsffvRqDVS2QIDBxGj1h9XLstnkgkTf2kLlRBRAJOj6iEr
-joLYOVdOlk1rYxVMJQn4MTEcYX9B3xy6eY7TEwIDAQABAoIBABzWLpyt+X6/oVBO
-fk2Q6532VfwCr5cSgM6LkUgvS3aeNmpqcUtqt99tx0g5Iny9DkHiJe+IqB+ZH7kZ
-9wDHX3nsz/sGMGdrLQifpkJorm3xdH021iNK2QZESktMTbyIS8VFePmFlhCi7l4g
-VjjUy9GoDb4w7xY9KnaA0jbgXGs0bk42rz26IPKi/PEaP5Di9l4x8coQ/ji1PoUA
-sCCoHKEM9r8JulV+b5+zBZ32h4A+xoATkI/tx3EiR6vs9s4+GDBwTAqJ9OOC9znW
-E/r8zbjvbZMl8sLtq533Rfk1bIwOSKtKeNC3erqD1Cr9FUl4hNrjoyM11ec6f0pg
-MGsPulkCgYEA5Svdme/sIZMKXJl+jM/H8cl5vynHiBnix7EOehMsotk8dP2PPv45
-p5nYw093yjaWI3qDbiBXeAHO5uD1xzCMKgJm9PFbdk++LNNxpMPReNAutrPduSLs
-DT+JtfkcEoZHeGVLHVJk4veFlA0fWQa3ZZqRw9ZfEcI1+lOpL2ugXMUCgYEAuEOJ
-zKNWoN1U22Aw1WovY5r9czdfcPAnQO46uveeBRpkgRLqnZIkLsHGgS+uUeiE+o4d
-XCK4jkueNpNrFfoEbgr6/lQ08AmGneGxwT87xc8PBrcijOAfLfxqw9LM/Yi8XhJL
-puM/JuJZ+Dud6/XxvwyXqjPf7+tQuxznHPU3HfcCgYEAqk8vIHdsxIbB7I8lvP+t
-V8Ki963U2xBhuIWcfJxDT8Kha1AEZIwJzMRIkt076MsoSLWDdxQR7N1rJamI/b7W
-a2Hdoaq8jfA1JJr+mbPsuBv+m0iQPkX1puLRNKsscZfZBWBBskjJMONCIgSeh0q2
-gIueSCvH+yqZcq85zEPvqQECgYEAm7H1rcQWXramDPeqS6n9gNxlbAVNz9AcWvDx
-DypLi2RRp/6j36CskhWJ9X6kfPFL66pJhKCR8SpT9Sl7QoaPV6xPiLb+RBTIen9K
-A0+64dmjiLkVqJN3xROT4wMr0s7G23X6FnnN0r1P6D/3oHmgWx34yQgsID1labVy
-UzWf7OECgYA4YYkSWBLHmyF8RSqHcCEANTCNDpAtxBRb/x0FIokuHZHw6nsTERC1
-fB5X8S7vHsb6CZPRdAbtwwVh4GSz5yFZ/0Ut65w6BM44coxEOWkGXQjGiJF4X2Uj
-SloYyJNLr1sMr8XHgS1qxD1eb2zNdeZr5gMt+vLPsNKRHXEfJfrr6g==
------END RSA PRIVATE KEY-----" > deploy_key.pem
+            MIIEpAIBAAKCAQEApPP9HU5/9dYJ3/Qry+AeXQqF5T8RwicZm5exQLMxwlJ5WB+L
+            OZT0UTEbSFaUAbAeXV0xzHE73cvVPOGuU07y0s2+y5srUSr6efiZ9FADAhNQs12s
+            +JTSJt0tdjFnfuUJfJkQlFW0NnQI3zyJ75PHNeoLWz9Ujh2715XV2gcAGh+ii0oe
+            CDhAGUWf9+EjJrHZHcZc20J2fxb0Lr3khURIekRiO9W0mD+99fgu3e/po/MdeMaz
+            U0UZ1FujKw7mCqeeTFwsffvRqDVS2QIDBxGj1h9XLstnkgkTf2kLlRBRAJOj6iEr
+            joLYOVdOlk1rYxVMJQn4MTEcYX9B3xy6eY7TEwIDAQABAoIBABzWLpyt+X6/oVBO
+            fk2Q6532VfwCr5cSgM6LkUgvS3aeNmpqcUtqt99tx0g5Iny9DkHiJe+IqB+ZH7kZ
+            9wDHX3nsz/sGMGdrLQifpkJorm3xdH021iNK2QZESktMTbyIS8VFePmFlhCi7l4g
+            VjjUy9GoDb4w7xY9KnaA0jbgXGs0bk42rz26IPKi/PEaP5Di9l4x8coQ/ji1PoUA
+            sCCoHKEM9r8JulV+b5+zBZ32h4A+xoATkI/tx3EiR6vs9s4+GDBwTAqJ9OOC9znW
+            E/r8zbjvbZMl8sLtq533Rfk1bIwOSKtKeNC3erqD1Cr9FUl4hNrjoyM11ec6f0pg
+            MGsPulkCgYEA5Svdme/sIZMKXJl+jM/H8cl5vynHiBnix7EOehMsotk8dP2PPv45
+            p5nYw093yjaWI3qDbiBXeAHO5uD1xzCMKgJm9PFbdk++LNNxpMPReNAutrPduSLs
+            DT+JtfkcEoZHeGVLHVJk4veFlA0fWQa3ZZqRw9ZfEcI1+lOpL2ugXMUCgYEAuEOJ
+            zKNWoN1U22Aw1WovY5r9czdfcPAnQO46uveeBRpkgRLqnZIkLsHGgS+uUeiE+o4d
+            XCK4jkueNpNrFfoEbgr6/lQ08AmGneGxwT87xc8PBrcijOAfLfxqw9LM/Yi8XhJL
+            puM/JuJZ+Dud6/XxvwyXqjPf7+tQuxznHPU3HfcCgYEAqk8vIHdsxIbB7I8lvP+t
+            V8Ki963U2xBhuIWcfJxDT8Kha1AEZIwJzMRIkt076MsoSLWDdxQR7N1rJamI/b7W
+            a2Hdoaq8jfA1JJr+mbPsuBv+m0iQPkX1puLRNKsscZfZBWBBskjJMONCIgSeh0q2
+            gIueSCvH+yqZcq85zEPvqQECgYEAm7H1rcQWXramDPeqS6n9gNxlbAVNz9AcWvDx
+            DypLi2RRp/6j36CskhWJ9X6kfPFL66pJhKCR8SpT9Sl7QoaPV6xPiLb+RBTIen9K
+            A0+64dmjiLkVqJN3xROT4wMr0s7G23X6FnnN0r1P6D/3oHmgWx34yQgsID1labVy
+            UzWf7OECgYA4YYkSWBLHmyF8RSqHcCEANTCNDpAtxBRb/x0FIokuHZHw6nsTERC1
+            fB5X8S7vHsb6CZPRdAbtwwVh4GSz5yFZ/0Ut65w6BM44coxEOWkGXQjGiJF4X2Uj
+            SloYyJNLr1sMr8XHgS1qxD1eb2zNdeZr5gMt+vLPsNKRHXEfJfrr6g==
+            -----END RSA PRIVATE KEY-----" > deploy_key.pem
             sudo chmod 400 deploy_key.pem
             sudo ssh -o StrictHostKeyChecking=no -i deploy_key.pem ubuntu@54.145.42.248 "sudo docker compose up --pull --force-recreate"
 
