@@ -91,7 +91,7 @@ jobs:
             # nohup used to detach the script execution from the current session and prevent it from being terminated when the SSH session ends
             # > /dev/null redericts output to null also used to run in background
 
-# Orchestrate our job run sequence
+# Orchestrate job run sequence
 workflows:
   lint-test-build-deliver-deploy:
     jobs:
