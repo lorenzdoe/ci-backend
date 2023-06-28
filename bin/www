@@ -12,11 +12,14 @@ async function waitForConnection(db) {
 
 function start() {
   var db = require('../db/db');
+  const { initializeDb } = require('../db/initializer');
 
   waitForConnection(db)
   // for db persistance next line critical
       .then(() => db.sync( { force: true } ))
       .then(() => console.log("All models were synchronized successfully."))
+      .then(() => initializeDb())
+      .then(() => console.log("Database successfully initialized"))
       .then(() => startServer());
 }
 

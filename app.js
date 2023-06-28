@@ -12,6 +12,7 @@ var logger = require('morgan');
 var todosRouter = require('./routes/todos');
 var loginRouter = require('./routes/sessions');
 var userRouter = require('./routes/users');
+var featureRouter = require('./routes/features');
 
 // for protected routes
 const { authenticate } = require('./middlewares/auth');
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/todos', authenticate, todosRouter);
 app.use('/sessions', loginRouter);     // handles login
 app.use('/users', userRouter);         // handles registration
+app.use('/features', featureRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
