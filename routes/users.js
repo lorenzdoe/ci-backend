@@ -21,9 +21,9 @@ router.post('/',
             }
             const user = await db.models.user.create({
                 username: req.body.username,
-                password: req.body.password
+                password: req.body.password,
+                test_group: req.body.variant
             });
-
             res.status(201).json(user);
         } catch (err) {
             res.status(500).json({ errors: err });
