@@ -25,7 +25,7 @@ const db = new Sequelize(connUrl);
 const models = [
     require('../models/todo'),
     require('../models/user'),
-    require('../models/abTest')
+    require('../models/abTest'),
     require('../models/feature')
 ];
 
