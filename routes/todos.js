@@ -24,9 +24,12 @@ router.post('/',
             return res.status(400).json({ errors: errors.array() });
         }
 
+        var date = body('date').not().isEmpty() ? req.body.date : null;
+
         const todo = await db.models.todo.create({
             name: req.body.name,
-            username: req.body.username
+            username: req.body.username,
+            date: date
         });
 
         res.status(201).json(todo);

@@ -151,8 +151,8 @@ describe('Test HTTP calls mocked db', () => {
                 name: 'buy milk'
             };
                 // Mock
-            let findByPkSpy = jest.spyOn(db.models.user, 'findByPk').mockResolvedValue(testUser);
-            let createTodoSpy = jest.spyOn(db.models.todo, 'create').mockResolvedValue(todo);
+            jest.spyOn(db.models.user, 'findByPk').mockResolvedValue(testUser);
+            jest.spyOn(db.models.todo, 'create').mockResolvedValue(todo);
             let arrangeResponse = await request(app)
                 .post('/sessions')
                 .send(testUser);

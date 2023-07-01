@@ -26,6 +26,7 @@ const models = [
     require('../models/todo'),
     require('../models/user'),
     require('../models/abTest')
+    require('../models/feature')
 ];
 
 for (const model of models) {
