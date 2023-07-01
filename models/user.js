@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
             defaultValue: false
         },
         test_group: {
-            allowNull: false,
+            allowNull: true,
             type: DataTypes.STRING,
         },
     });
