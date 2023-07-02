@@ -22,7 +22,7 @@ router.post('/',
             const user = await db.models.user.create({
                 username: req.body.username,
                 password: req.body.password,
-                test_group: req.body.variant
+                test_group: req.body.group
             });
             res.status(201).json(user);
         } catch (err) {
