@@ -16,7 +16,7 @@ function start() {
 
   waitForConnection(db)
   // for db persistance next line critical
-      .then(() => db.sync( { force: true } ))
+      .then(() => db.sync( { force: false } ))
       .then(() => console.log("All models were synchronized successfully."))
       .then(() => initializeDb())
       .then(() => console.log("Database successfully initialized"))
