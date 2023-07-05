@@ -82,7 +82,7 @@ jobs:
 
   deploy:
     machine:
-      enabled: true
+      image: ubuntu-2204:2023.04.2
     steps:
       - run: 
           name: "Deploy to EC2 instance"
