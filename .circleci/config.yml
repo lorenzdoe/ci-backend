@@ -82,7 +82,7 @@ jobs:
 
   deploy:
     machine:
-      enabled: true
+      docker_layer_caching: true
     steps:
       - run: 
           name: "Deploy to EC2 instance"
