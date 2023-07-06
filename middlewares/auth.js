@@ -27,6 +27,7 @@ const authenticate = function(req, res, next) {
 };
 
 const isAdmin = function(req, res, next) {
+  next();
   if(!Object.prototype.hasOwnProperty.call(req.headers,'authorization')){
     next(createError(401));
   }
