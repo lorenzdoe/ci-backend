@@ -15,7 +15,7 @@ var userRouter = require('./routes/users');
 var featureRouter = require('./routes/features');
 
 // for protected routes
-const { authenticate } = require('./middlewares/auth');
+const { authenticate } = require('./middlewares/auth')
 
 // create an instance of express
 var app = express();
